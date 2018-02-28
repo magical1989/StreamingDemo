@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="encoding" value="utf-8"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p: %m %n"/>
+		</layout>
+	</appender>
+	
+	<appender name="spark" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/data/logs/skynet-com.ly.trigram/streaming-base/spark_mq.log"/>
+		<param name="encoding" value="utf-8"/>
+		<param name="maxFileSize" value="300MB"/>
+		<param name="maxBackupIndex" value="3"/>
+		<param name="threshold" value="INFO"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p: %m [%F:%L]%n"/>
+		</layout>
+	</appender>
+
+	<appender name="normal" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/data/logs/skynet-com.ly.trigram/streaming-base/spark_mq_normal.log"/>
+		<param name="encoding" value="utf-8"/>
+		<param name="maxFileSize" value="300MB"/>
+		<param name="maxBackupIndex" value="10"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p: %m [%F:%L]%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="acceptOnMatch" value="true"/> 
+			<param name="levelMin" value="INFO"/>
+			<param name="levelMax" value="WARN"/>
+		</filter>
+	</appender>
+	
+	<appender name="error" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="/data/logs/skynet-com.ly.trigram/streaming-base/spark_mq_error.log"/>
+		<param name="encoding" value="utf-8"/>
+		<param name="maxFileSize" value="300MB"/>
+		<param name="maxBackupIndex" value="10"/>
+		<param name="threshold" value="ERROR"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p: %m [%F:%L]%n"/>
+		</layout>
+	</appender>
+    
+	<root>
+		<priority value="INFO"/>
+		<appender-ref ref="stdout"/>  
+		<appender-ref ref="spark"/>
+		<appender-ref ref="normal"/>
+		<appender-ref ref="error"/>
+	</root>
+    
+</log4j:configuration>
